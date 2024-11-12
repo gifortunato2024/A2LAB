@@ -12,8 +12,7 @@ O site oferece gráficos e tabelas que avaliam as opiniões nas redes sociais so
 
 Ao selecionar uma subsidiária específica, os usuários podem explorar análises de sentimento mais detalhadas por meio de gráficos interativos, tabelas classificatórias e um sistema de monitoramento de crises que avalia a gravidade das situações enfrentadas por cada subempresa.
 
-Para uma gestão mais eficiente, contamos com um chatbot chamado E-Cris, nossa assistente virtual, que orienta sobre os tipos de crises e fornece informações sobre as melhores práticas de gerenciamento. O chatbot oferece fórmulas e exemplos de casos reais de crises, ajudando os gestores a tomarem decisões mais informadas.
-
+Para uma gestão mais eficiente, contamos com um chatbot chamado E-Cris, nossa assistente virtual, que orienta sobre os tipos de crises e fornece informações sobre as melhores práticas de gerenciamento. 
 """)
 
 #Titulo
@@ -23,7 +22,7 @@ st.markdown("<h2 style='color: #000000; font-size: 24px; font-weight: bold;'>Esc
 #box para selecionar a subsidiária
 option = st.selectbox(
     "Qual subsidiária você quer monitorar?",
-    ("Todas", "fanta", "Coca-Cola", "Del-Valle", "Power-ade"),
+    ("Todas", "Fanta", "Coca-Cola", "Del-Valle", "Schweppes"),
 )
 
 st.write("Você escolheu:", option)
