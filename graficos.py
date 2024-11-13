@@ -24,7 +24,7 @@ option = st.selectbox(
 )
 
 # Carregar dados de comentários
-combined_df = pd.read_csv('Comentários combinados - combined_comments.csv')  # Substitua pelo caminho correto se necessário
+combined_df = pd.read_csv('Comentários combinados - combined_comments (1).csv')  # Substitua pelo caminho correto se necessário
 
 # Filtrar dados pela opção selecionada
 if option != "Todas":
