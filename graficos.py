@@ -5,13 +5,11 @@ import altair as alt
 # Sidebar
 with st.sidebar:
     st.sidebar.image("Coca-Cola_logo.svg", width=200) 
-    st.subheader("Sobre o nosso site")
+    st.subheader("Sobre o aplicativo")
     st.write("""
-    O site oferece gráficos e tabelas que avaliam as opiniões nas redes sociais sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba Home, onde está disponível a visão geral da holding, você encontra todos os gráficos de forma condensada, proporcionando um panorama geral. 
+    O site oferece gráficos e tabelas que avaliam as opiniões no Tiktok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba Home, onde está disponível a visão geral da holding, você encontra todos os gráficos de forma condensada, proporcionando um panorama geral. 
 
-    Ao selecionar uma subsidiária específica, os usuários podem explorar análises de sentimento mais detalhadas por meio de gráficos interativos, tabelas classificatórias e um sistema de monitoramento de crises que avalia a gravidade das situações enfrentadas por cada subempresa.
-
-    Para uma gestão mais eficiente, contamos com um chatbot chamado E-Cris, nossa assistente virtual, que orienta sobre os tipos de crises e fornece informações sobre as melhores práticas de gerenciamento. 
+    Com um sistema de monitoramento de crises que avalia a gravidade das situações enfrentadas por cada subempresa, você pode contar com a nossa assistente virtual E-Cris para uma gestão mais eficiente, que orienta sobre os tipos de crises e fornece informações sobre as melhores práticas de gerenciamento. 
     """)
 
 # Título
