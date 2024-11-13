@@ -1,6 +1,8 @@
 import streamlit as st 
 import pandas as pd
 import altair as alt
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 # Sidebar
 with st.sidebar:
@@ -63,6 +65,19 @@ with tab1:
     else:
         st.success("Situação estável.")
 
+    # Nuvem de palavras para comentários negativos
+    st.subheader("Nuvem de Palavras dos Comentários Negativos")
+    if not negative_comments.empty:
+        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='Reds').generate(all_negative_comments)
+
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis('off')
+        st.pyplot(plt)
+    else:
+        st.write("Não há comentários negativos para exibir a nuvem de palavras.")
+
 # Aba E-Cris
 with tab2:
     st.markdown("<h2 style='color: #000000; font-size: 24px; font-weight: bold;'>E-Cris: Assistente Virtual</h2>", unsafe_allow_html=True)
@@ -73,3 +88,4 @@ with tab2:
     # Simular a presença de um chatbot (esta parte pode ser expandida com uma integração de chatbot real)
     st.text_area("Digite sua pergunta para E-Cris:", placeholder="Como lidar com uma crise de imagem?")
     st.button("Enviar")
+
