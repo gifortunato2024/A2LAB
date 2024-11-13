@@ -68,7 +68,7 @@ with tab1:
     # Nuvem de palavras
     st.subheader("Nuvem de Palavras dos Comentários Negativos (Top 10 palavras)")
     if not negative_comments.empty:
-        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        all_negative_comments = " ".join(negative_comments['comentário'].dropna())
         wordcloud = WordCloud(
             width=800, 
             height=400, 
