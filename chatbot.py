@@ -65,18 +65,23 @@ with tab1:
     else:
         st.success("Situação estável.")
 
-    # Nuvem de palavras para comentários negativos
-    st.subheader("Nuvem de Palavras dos Comentários Negativos")
+    # Nuvem de palavras
+    st.subheader("Nuvem de Palavras dos Comentários Negativos (Top 10 palavras)")
     if not negative_comments.empty:
-        all_negative_comments = " ".join(negative_comments['comentário'].dropna())
-        wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='Reds').generate(all_negative_comments)
+        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        wordcloud = WordCloud(
+            width=800, 
+            height=400, 
+            background_color='white', 
+            colormap='Reds', 
+            stopwords=STOPWORDS, 
+            max_words=10
+        ).generate(all_negative_comments)
 
         plt.figure(figsize=(10, 5))
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis('off')
         st.pyplot(plt)
-    else:
-        st.write("Não há comentários negativos para exibir a nuvem de palavras.")
 
 # Aba E-Cris
 with tab2:
