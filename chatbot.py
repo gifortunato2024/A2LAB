@@ -68,7 +68,7 @@ with tab1:
     # Nuvem de palavras para comentários negativos
     st.subheader("Nuvem de Palavras dos Comentários Negativos")
     if not negative_comments.empty:
-        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        all_negative_comments = " ".join(negative_comments['comentário'].dropna())
         wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='Reds').generate(all_negative_comments)
 
         plt.figure(figsize=(10, 5))
