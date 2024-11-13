@@ -1,8 +1,14 @@
 import streamlit as st 
 import pandas as pd
 import altair as alt
-from wordcloud import WordCloud, STOPWORDS 
+from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import nltk
+from nltk.corpus import stopwords
+import re
+
+# Baixar stopwords se necessário
+nltk.download('stopwords')
 
 # Sidebar
 with st.sidebar:
@@ -65,24 +71,31 @@ with tab1:
     else:
         st.success("Situação estável.")
 
-    # Nuvem de palavras
-    st.subheader("Nuvem de Palavras dos Comentários Negativos (Top 10 palavras)")
+    # Nuvem de palavras para comentários negativos com remoção de stopwords do NLTK e exibição das 10 palavras mais comuns
+    st.subheader("Nuvem de Palavras dos Comentários Negativos")
     if not negative_comments.empty:
         all_negative_comments = " ".join(negative_comments['comentário'].dropna())
-        custom_stopwords = STOPWORDS.union({"é", "isso", "vai", "não", "aqui", "mas", "mais", "eu", "e"})  # Adicione mais palavras se necessário
+        nltk_stopwords = set(stopwords.words('portuguese'))
+
+        # Limpeza do texto e remoção de stopwords
+        words = re.sub(r'[^\w\s]', '', all_negative_comments).lower().split()
+        filtered_words = [word for word in words if word not in nltk_stopwords]
+
+        # Criar a nuvem de palavras
         wordcloud = WordCloud(
             width=800, 
             height=400, 
             background_color='white', 
             colormap='Reds', 
-            stopwords=custom_stopwords, 
             max_words=10
-        ).generate(all_negative_comments)
+        ).generate(" ".join(filtered_words))
 
         plt.figure(figsize=(10, 5))
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis('off')
         st.pyplot(plt)
+    else:
+        st.write("Não há comentários negativos para exibir a nuvem de palavras.")
 
 # Aba E-Cris
 with tab2:
@@ -94,4 +107,3 @@ with tab2:
     # Simular a presença de um chatbot (esta parte pode ser expandida com uma integração de chatbot real)
     st.text_area("Digite sua pergunta para E-Cris:", placeholder="Como lidar com uma crise de imagem?")
     st.button("Enviar")
-
