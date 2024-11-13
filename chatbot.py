@@ -68,7 +68,7 @@ with tab1:
     # Nuvem de palavras
     st.subheader("Nuvem de Palavras dos Comentários Negativos (Top 10 palavras)")
     if not negative_comments.empty:
-        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        all_negative_comments = " ".join(negative_comments['comentário'].dropna())
         custom_stopwords = STOPWORDS.union({"é", "isso", "vai", "não", "aqui", "mas", "mais", "eu", "e"})  # Adicione mais palavras se necessário
         wordcloud = WordCloud(
             width=800, 
