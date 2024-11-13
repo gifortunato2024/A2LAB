@@ -1,7 +1,7 @@
 import streamlit as st 
 import pandas as pd
 import altair as alt
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS 
 import matplotlib.pyplot as plt
 
 # Sidebar
