@@ -28,16 +28,16 @@ combined_df = pd.read_csv('Comentários combinados - combined_comments.csv')  #
 
 # Filtrar dados pela opção selecionada
 if option != "Todas":
-    filtered_df = combined_df[combined_df['subsidiary'] == option]
+    filtered_df = combined_df[combined_df['subsidiária'] == option]
 else:
     filtered_df = combined_df
 
 # Exibir amostra dos dados carregados
 st.write("Amostra dos dados:")
-st.dataframe(filtered_df.head())
+st.dataframe(filtered_df)
 
 # Contagem dos sentimentos
-sentiment_counts = filtered_df['sentiment'].value_counts()
+sentiment_counts = filtered_df['sentimento'].value_counts()
 
 # Criar gráfico de barras para exibir a contagem de sentimentos
 st.subheader("Distribuição de Sentimentos")
@@ -46,14 +46,14 @@ st.bar_chart(sentiment_counts)
 # Criar gráfico de setores para exibir a proporção de sentimentos
 st.subheader("Proporção de Sentimentos")
 st.write(alt.Chart(filtered_df).mark_arc().encode(
-    theta=alt.Theta(field='sentiment', type='nominal', aggregate='count'),
-    color=alt.Color(field='sentiment', type='nominal'),
-    tooltip=['sentiment', 'count()']
+    theta=alt.Theta(field='sentimento', type='nominal', aggregate='count'),
+    color=alt.Color(field='sentimento', type='nominal'),
+    tooltip=['sentimento', 'count()']
 ))
 
 # Monitoramento de crise
 st.subheader("Análise de Crises")
-negative_comments = filtered_df[filtered_df['sentiment'] == 'negativo']
+negative_comments = filtered_df[filtered_df['sentimento'] == 'negativo']
 st.write(f"Número de comentários negativos: {len(negative_comments)}")
 
 if len(negative_comments) > 50:
