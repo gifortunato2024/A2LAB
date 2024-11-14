@@ -64,7 +64,7 @@ with tab1:
     negative_comments = filtered_df[filtered_df['sentimento'] == 'negativo']
     st.write(f"Número de comentários negativos: {len(negative_comments)}")
 
-    if len(negative_comments) > 50:
+    if len(negative_comments) > 40:
         st.error("Atenção: Possível crise detectada! Alto volume de comentários negativos.")
     else:
         st.success("Situação estável.")
