@@ -14,10 +14,14 @@ nltk.download('stopwords')
 with st.sidebar:
     st.sidebar.image("Coca-Cola_logo.svg", width=200) 
     st.subheader("Sobre o aplicativo")
-    st.write("""
-    O aplicativo apresenta gráficos e tabelas que avaliam as opiniões no TikTok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba "Monitoramento", é possível acessar uma visão geral da holding com todos os gráficos de forma condensada, oferecendo um panorama completo. O sistema de monitoramento de crises avalia a gravidade das situações enfrentadas por cada subempresa, e com o auxílio da assistente virtual E-Cris, é possível garantir uma gestão mais eficiente, fornecendo orientações sobre tipos de crises e as melhores práticas de gerenciamento.
-    """)
-
+    
+    # Justificar o novo texto usando HTML e CSS embutido
+    st.markdown("""
+    <div style="text-align: justify;">
+        O aplicativo apresenta gráficos e tabelas que avaliam as opiniões no TikTok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba "Monitoramento", é possível acessar uma visão geral da holding com todos os gráficos de forma condensada, oferecendo um panorama completo. O sistema de monitoramento de crises avalia a gravidade das situações enfrentadas por cada subempresa, e com o auxílio da assistente virtual E-Cris, é possível garantir uma gestão mais eficiente, fornecendo orientações sobre tipos de crises e as melhores práticas de gerenciamento.
+    </div>
+    """, unsafe_allow_html=True)
+    
 # Título
 st.markdown("<h1 style='color: red;'>The Coca-Cola Company</h1>", unsafe_allow_html=True)
 
