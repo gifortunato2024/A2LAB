@@ -60,25 +60,27 @@ with tab1:
     col1, col2 = st.columns(2)
 
     with col1:
+        st.subheader("Distribuição de Sentimentos")
         bar_chart = alt.Chart(sentiment_counts).mark_bar().encode(
             x=alt.X('sentimento:N', sort='-y', title='Sentimento'),
             y=alt.Y('count:Q', title='Contagem'),
             color=alt.Color('sentimento:N', scale=color_scale, legend=None),
             tooltip=['sentimento', 'count']
         ).properties(
-            width=400,  # Aumentar a largura do gráfico
-            height=400  # Aumentar a altura do gráfico
+            width=300,
+            height=300
         )
         st.altair_chart(bar_chart)
 
     with col2:
+        st.subheader("Proporção de Sentimentos")
         pie_chart = alt.Chart(sentiment_counts).mark_arc().encode(
             theta=alt.Theta(field='count', type='quantitative'),
             color=alt.Color('sentimento:N', scale=color_scale),
             tooltip=['sentimento', 'count']
         ).properties(
-            width=400,  # Aumentar a largura do gráfico
-            height=400  # Aumentar a altura do gráfico
+            width=300,
+            height=300
         )
         st.altair_chart(pie_chart)
 
