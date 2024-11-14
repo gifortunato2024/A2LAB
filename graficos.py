@@ -52,7 +52,7 @@ with tab1:
     sentiment_counts = filtered_df['sentimento'].value_counts().reset_index()
     sentiment_counts.columns = ['sentimento', 'count']
 
-    # Definir cores personalizadas para os gráficos
+    # Definir cores personalizadas
     color_scale = alt.Scale(domain=['positivo', 'neutro', 'negativo'],
                             range=['#1f77b4', '#aec7e8', '#d62728'])  # Azul escuro, azul claro e vermelho
 
@@ -68,9 +68,6 @@ with tab1:
         height=300
     )
 
-    # Título e gráfico de barras
-    st.altair_chart(bar_chart)
-
     # Criar gráfico de setores com as mesmas cores personalizadas
     st.subheader("Proporção de Sentimentos")
     pie_chart = alt.Chart(sentiment_counts).mark_arc().encode(
@@ -82,25 +79,29 @@ with tab1:
         height=300
     )
 
-    # Título e gráfico de setores
-    st.altair_chart(pie_chart)
+    # Exibir os gráficos lado a lado
+    col1, col2 = st.columns(2)
+    with col1:
+        st.altair_chart(bar_chart)
+    with col2:
+        st.altair_chart(pie_chart)
 
     # Monitoramento de crise
     st.subheader("Análise de Crises")
     negative_comments = filtered_df[filtered_df['sentimento'] == 'negativo']
     st.write(f"Número de comentários negativos: {len(negative_comments)}")
 
-    if len(negative_comments) > 50:
+    if len(negative_comments) > 40:
         st.error("Atenção: Possível crise detectada! Alto volume de comentários negativos.")
     else:
         st.success("Situação estável.")
 
     # Nuvem de palavras para comentários negativos com remoção de stopwords do NLTK e exibição das 10 palavras mais comuns
-    st.subheader("Nuvem de Palavras dos Comentários Negativos (Top 10 palavras)")
+    st.subheader("Nuvem de Palavras dos Comentários Negativos")
     if not negative_comments.empty:
-        all_negative_comments = " ".join(negative_comments['comment'].dropna())
+        all_negative_comments = " ".join(negative_comments['comentário'].dropna())
         nltk_stopwords = set(stopwords.words('portuguese'))
-        
+
         # Adicionar *stopwords* extras
         additional_stopwords = {"q", "pra", "deu", "vai", "slk", "é", "isso", "tão", "tipo", "aqui"}
         all_stopwords = nltk_stopwords.union(additional_stopwords)
