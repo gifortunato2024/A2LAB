@@ -15,9 +15,7 @@ with st.sidebar:
     st.sidebar.image("Coca-Cola_logo.svg", width=200) 
     st.subheader("Sobre o aplicativo")
     st.write("""
-    O aplicativo oferece gráficos e tabelas que avaliam as opiniões no Tiktok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba "Monitoramento", onde está disponível a visão geral da holding, você encontra todos os gráficos de forma condensada, proporcionando um panorama geral. 
-
-    Com um sistema de monitoramento de crises que avalia a gravidade das situações enfrentadas por cada subempresa, você pode contar com a nossa assistente virtual E-Cris para uma gestão mais eficiente, que orienta sobre os tipos de crises e fornece informações sobre as melhores práticas de gerenciamento. 
+    O aplicativo apresenta gráficos e tabelas que avaliam as opiniões no TikTok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba "Monitoramento", é possível acessar uma visão geral da holding com todos os gráficos de forma condensada, oferecendo um panorama completo. O sistema de monitoramento de crises avalia a gravidade das situações enfrentadas por cada subempresa, e com o auxílio da assistente virtual E-Cris, é possível garantir uma gestão mais eficiente, fornecendo orientações sobre tipos de crises e as melhores práticas de gerenciamento.
     """)
 
 # Título
