@@ -75,6 +75,9 @@ with tab1:
         all_negative_comments = " ".join(negative_comments['comentário'].dropna())
         nltk_stopwords = set(stopwords.words('portuguese'))
 
+        additional_stopwords = {"q", "pra", "deu", "vai", "slk", "é", "isso", "tão", "tipo"}
+        all_stopwords = nltk_stopwords.union(additional_stopwords)
+
         # Limpeza do texto e remoção de stopwords
         words = re.sub(r'[^\w\s]', '', all_negative_comments).lower().split()
         filtered_words = [word for word in words if word not in nltk_stopwords]
