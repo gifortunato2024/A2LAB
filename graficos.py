@@ -52,31 +52,38 @@ with tab1:
     sentiment_counts = filtered_df['sentimento'].value_counts().reset_index()
     sentiment_counts.columns = ['sentimento', 'count']
 
-    # Criar gráfico de barras com cores
+    # Definir cores personalizadas para os gráficos
+    color_scale = alt.Scale(domain=['positivo', 'neutro', 'negativo'],
+                            range=['#1f77b4', '#aec7e8', '#d62728'])  # Azul escuro, azul claro e vermelho
+
+    # Criar gráfico de barras com cores personalizadas
     st.subheader("Distribuição de Sentimentos")
     bar_chart = alt.Chart(sentiment_counts).mark_bar().encode(
         x=alt.X('sentimento:N', sort='-y', title='Sentimento'),
         y=alt.Y('count:Q', title='Contagem'),
-        color=alt.Color('sentimento:N', scale=alt.Scale(scheme='category20b'), legend=None),
+        color=alt.Color('sentimento:N', scale=color_scale, legend=None),
         tooltip=['sentimento', 'count']
     ).properties(
         width=300,
         height=300
     )
 
-    # Criar gráfico de setores com as mesmas cores
+    # Título e gráfico de barras
+    st.altair_chart(bar_chart)
+
+    # Criar gráfico de setores com as mesmas cores personalizadas
     st.subheader("Proporção de Sentimentos")
     pie_chart = alt.Chart(sentiment_counts).mark_arc().encode(
         theta=alt.Theta(field='count', type='quantitative'),
-        color=alt.Color('sentimento:N', scale=alt.Scale(scheme='category20b')),
+        color=alt.Color('sentimento:N', scale=color_scale),
         tooltip=['sentimento', 'count']
     ).properties(
         width=300,
         height=300
     )
 
-    # Exibir os gráficos lado a lado
-    st.altair_chart(bar_chart | pie_chart)
+    # Título e gráfico de setores
+    st.altair_chart(pie_chart)
 
     # Monitoramento de crise
     st.subheader("Análise de Crises")
@@ -128,5 +135,3 @@ with tab2:
     # Simular a presença de um chatbot (esta parte pode ser expandida com uma integração de chatbot real)
     st.text_area("Digite sua pergunta para E-Cris:", placeholder="Como lidar com uma crise de imagem?")
     st.button("Enviar")
-
-
