@@ -11,3 +11,7 @@ llama-index-llms-groq
 llama-index-vector-stores-duckdb
 llama-index-embeddings-huggingface
 sentence-transformers
+numpy
+beautifulsoup4
+wordcloud
+nltk
