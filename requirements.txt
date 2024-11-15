@@ -1,8 +1,13 @@
 streamlit
+altair
 pandas
+llama-index
 seaborn
+fastparquet
 matplotlib
-numpy
-beautifulsoup4
-wordcloud
-nltk
+duckdb
+openpyxl
+llama-index-llms-groq
+llama-index-vector-stores-duckdb
+llama-index-embeddings-huggingface
+sentence-transformers
