@@ -26,7 +26,7 @@ import os
 with open('chave_groq', 'r') as arquivo:
     chave_groq = arquivo.read()
 groq_model = 'llama-3.2-90b-vision-preview'
-pasta_pdfs = 'pdfs'
+pasta_pdfs = 'pdfs.zip'
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
 Settings.llm = Groq(api_key=chave_groq, model=groq_model, temperature=0)
 Settings.embed_model = HuggingFaceEmbedding(model_name=modelo_embeddings)
