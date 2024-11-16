@@ -7,7 +7,7 @@ import nltk
 from nltk.corpus import stopwords
 import re
 from llama_index.llms.groq import Groq
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, get_response_synthesizer
+from llama_index.core import VectorStoreIndex, get_response_synthesizer
 from llama_index.core import StorageContext
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.retrievers import VectorIndexRetriever
@@ -15,6 +15,7 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.postprocessor import SimilarityPostprocessor
 from llama_index.core import Settings
 from llama_index.vector_stores.duckdb import DuckDBVectorStore
+from llama_index.core.readers.file.pdf import PDFReader
 import os
 
 # Baixar stopwords se necessário
@@ -42,9 +43,11 @@ pdf_files = [
 
 # Carregar todos os documentos dos arquivos especificados
 documents = []
+pdf_reader = PDFReader()
+
 for file_path in pdf_files:
     if os.path.exists(file_path):
-        documents.extend(SimpleDirectoryReader(file_path).load_data())
+        documents.extend(pdf_reader.load_data(file_path))
     else:
         st.warning(f"Arquivo {file_path} não encontrado.")
 
