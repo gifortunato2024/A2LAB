@@ -1,4 +1,3 @@
-
 import streamlit as st 
 import pandas as pd
 import altair as alt
@@ -9,7 +8,7 @@ from nltk.corpus import stopwords
 import re
 import PyPDF2
 from llama_index.llms.groq import Groq
-from llama_index.core import VectorStoreIndex, get_response_synthesizer
+from llama_index.core import VectorStoreIndex, get_response_synthesizer, Document
 from llama_index.core import StorageContext
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.retrievers import VectorIndexRetriever
@@ -56,24 +55,28 @@ documents = []
 for file_path in pdf_files:
     if os.path.exists(file_path):
         content = read_pdf(file_path)
-        documents.append({"text": content})
+        documents.append(Document(text=content))
     else:
         st.warning(f"Arquivo {file_path} não encontrado.")
 
-# Criação do índice
-vector_store = DuckDBVectorStore('rag.duckdb', persist_dir='rag')
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
-vector_index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
+# Verificar se há documentos carregados
+if documents:
+    # Criação do índice
+    vector_store = DuckDBVectorStore('rag.duckdb', persist_dir='rag')
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
+    vector_index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
 
-# Criação do recuperador
-retriever = VectorIndexRetriever(index=vector_index, similarity_top_k=5)
-response_synthesizer = get_response_synthesizer()
-query_engine = RetrieverQueryEngine.from_args(
-    retriever=retriever, 
-    response_synthesizer=response_synthesizer,
-    response_mode='tree_sumarize',
-    node_postprocessors=[SimilarityPostprocessor(similarity_threshold=0.3)]
-)
+    # Criação do recuperador
+    retriever = VectorIndexRetriever(index=vector_index, similarity_top_k=5)
+    response_synthesizer = get_response_synthesizer()
+    query_engine = RetrieverQueryEngine.from_args(
+        retriever=retriever, 
+        response_synthesizer=response_synthesizer,
+        response_mode='tree_sumarize',
+        node_postprocessors=[SimilarityPostprocessor(similarity_threshold=0.3)]
+    )
+else:
+    st.error("Nenhum documento foi carregado para o chatbot.")
 
 # Sidebar
 with st.sidebar:
