@@ -1,3 +1,4 @@
+
 import streamlit as st 
 import pandas as pd
 import altair as alt
@@ -6,6 +7,7 @@ import matplotlib.pyplot as plt
 import nltk
 from nltk.corpus import stopwords
 import re
+import PyPDF2
 from llama_index.llms.groq import Groq
 from llama_index.core import VectorStoreIndex, get_response_synthesizer
 from llama_index.core import StorageContext
@@ -15,7 +17,6 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.postprocessor import SimilarityPostprocessor
 from llama_index.core import Settings
 from llama_index.vector_stores.duckdb import DuckDBVectorStore
-from llama_index.core.readers.file.pdf import PDFReader
 import os
 
 # Baixar stopwords se necessário
@@ -41,13 +42,21 @@ pdf_files = [
     'crise_3_pdf.pdf'
 ]
 
+# Função para ler conteúdo de PDFs
+def read_pdf(file_path):
+    pdf_text = ""
+    with open(file_path, 'rb') as file:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            pdf_text += page.extract_text() + "\n"
+    return pdf_text
+
 # Carregar todos os documentos dos arquivos especificados
 documents = []
-pdf_reader = PDFReader()
-
 for file_path in pdf_files:
     if os.path.exists(file_path):
-        documents.extend(pdf_reader.load_data(file_path))
+        content = read_pdf(file_path)
+        documents.append({"text": content})
     else:
         st.warning(f"Arquivo {file_path} não encontrado.")
 
