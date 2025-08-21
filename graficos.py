@@ -18,23 +18,46 @@ from llama_index.vector_stores.duckdb import DuckDBVectorStore
 
 import os 
 
-#Variáveis do ambiente
+# === LLM & Embeddings (E-Cris) ===
 with open('chave_groq', 'r') as arquivo:
-    chave_groq = arquivo.read()
-groq_model = 'llama-3.2-90b-vision-preview'
+    chave_groq = arquivo.read().strip()  # tira \n extras
+
+# Modelo principal da E-Cris
+GROQ_PRIMARY = 'llama-3.3-70b-versatile'
+GROQ_FALLBACK = 'llama-3.2-11b-text-preview'  # opcional, se faltar cota
+
+def make_llm(model_name=GROQ_PRIMARY, temperature=0):
+    return Groq(api_key=chave_groq, model=model_name, temperature=temperature)
+
+Settings.llm = make_llm()
 
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
-Settings.llm = Groq(api_key=chave_groq, model=groq_model, temperature=0)
 Settings.embed_model = HuggingFaceEmbedding(model_name=modelo_embeddings)
 Settings.chunk_size = 2048
 Settings.chunk_overlap = 512
+
+# vector_store continua igual
 vector_store = DuckDBVectorStore.from_local("./rag.duckdb")
 
+# contexto e índice (mantém igual)
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
 vector_index = VectorStoreIndex.from_vector_store(vector_store, storage_context=storage_context)
-retriever = VectorIndexRetriever(index=vector_index, similarity_top_k=5)
-response_synthesizer = get_response_synthesizer()
-query_engine = RetrieverQueryEngine.from_args(retriever=retriever, response_synthesizer=response_synthesizer, response_mode='tree_summarize', node_postprocessors=[SimilarityPostprocessor(similarity_threshold=0.3)], streaming=True)
+
+# retriever mais amplo
+retriever = VectorIndexRetriever(index=vector_index, similarity_top_k=8)
+
+# pós-processamento leve (ou remova se preferir)
+postprocessors = [SimilarityPostprocessor(similarity_threshold=0.05)]
+
+# sintetizador com modo definido
+response_synthesizer = get_response_synthesizer(response_mode='tree_summarize')
+
+# IMPORTANTE: sem streaming aqui
+query_engine = RetrieverQueryEngine.from_args(
+    retriever=retriever,
+    response_synthesizer=response_synthesizer,
+    node_postprocessors=postprocessors
+)
  
 # Baixar stopwords se necessário
 nltk.download('stopwords')
