@@ -32,7 +32,10 @@ def make_llm(model_name=GROQ_PRIMARY, temperature=0):
 Settings.llm = make_llm()
 
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
-Settings.embed_model = HuggingFaceEmbedding(model_name=modelo_embeddings)
+Settings.embed_model = HuggingFaceEmbedding(
+    model_name=modelo_embeddings,
+    device="cpu"
+)
 Settings.chunk_size = 2048
 Settings.chunk_overlap = 512
 
