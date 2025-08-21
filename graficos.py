@@ -39,7 +39,7 @@ Settings.llm = make_llm()
 
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
 Settings.embed_model = HuggingFaceEmbedding(
-    model_name=modelo_embeddings,
+    model_name='sentence-transformers/paraphrase-multilingual-mpnet-base-v2',
     device="cpu",
 )
 Settings.chunk_size = 2048
