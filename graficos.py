@@ -85,7 +85,7 @@ with tab1:
         ("Fanta", "Coca-Cola", "Del Valle", "Schweppes")
     )
     # Carregar dados de comentários
-    combined_df = pd.read_csv('Comentários combinados - combined_comments (1).csv')  # Substitua pelo caminho correto se necessário
+    combined_df = pd.read_csv('comentarios_combinados')  # Substitua pelo caminho correto se necessário
     # Filtrar dados pela opção selecionada
     filtered_df = combined_df[combined_df['subsidiária'] == option]
     # Exibir amostra dos dados carregados
