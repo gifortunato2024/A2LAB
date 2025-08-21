@@ -16,13 +16,7 @@ from llama_index.core.postprocessor import SimilarityPostprocessor
 from llama_index.core import Settings
 from llama_index.vector_stores.duckdb import DuckDBVectorStore
 
-import os
-
-# === Força uso de CPU (desativa GPU/MPS) ===
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
-import torch
-torch.set_default_device("cpu")
+import os 
 
 # === LLM & Embeddings (E-Cris) ===
 with open('chave_groq', 'r') as arquivo:
@@ -38,10 +32,7 @@ def make_llm(model_name=GROQ_PRIMARY, temperature=0):
 Settings.llm = make_llm()
 
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
-Settings.embed_model = HuggingFaceEmbedding(
-    model_name='sentence-transformers/paraphrase-multilingual-mpnet-base-v2',
-    device="cpu",
-)
+Settings.embed_model = HuggingFaceEmbedding(model_name=modelo_embeddings)
 Settings.chunk_size = 2048
 Settings.chunk_overlap = 512
 
@@ -70,7 +61,6 @@ query_engine = RetrieverQueryEngine.from_args(
  
 # Baixar stopwords se necessário
 nltk.download('stopwords')
-
 # Sidebar
 with st.sidebar:
     st.sidebar.image("Coca-Cola_logo.svg", width=200) 
@@ -82,23 +72,20 @@ with st.sidebar:
         O aplicativo apresenta gráficos e tabelas que avaliam as opiniões no TikTok sobre cada subsidiária da Coca-Cola Company, classificando-as como neutras, positivas ou negativas. Na aba "Monitoramento", é possível acessar uma visão geral da holding com todos os gráficos de forma condensada, oferecendo um panorama completo. O sistema de monitoramento de crises avalia a gravidade das situações enfrentadas por cada subempresa, e com o auxílio da assistente virtual E-Cris, é possível garantir uma gestão mais eficiente, fornecendo orientações sobre tipos de crises e as melhores práticas de gerenciamento.
     </div>
     """, unsafe_allow_html=True)
-
 # Título
 st.markdown("<h1 style='color: red;'>The Coca-Cola Company</h1>", unsafe_allow_html=True)
-
 # Criar abas no aplicativo
 tab1, tab2 = st.tabs(["Monitoramento", "E-Cris"])
-
 # Aba de monitoramento
 with tab1:
-    st.markdown("<h2 style='color: #FFFFFF; font-size: 24px; font-weight: bold;'>Escolha uma das subsidiárias para monitorar:</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #000000; font-size: 24px; font-weight: bold;'>Escolha uma das subsidiárias para monitorar:</h2>", unsafe_allow_html=True)
     # Box para selecionar a subsidiária
     option = st.selectbox(
         "Qual subsidiária você quer monitorar?",
         ("Fanta", "Coca-Cola", "Del Valle", "Schweppes")
     )
     # Carregar dados de comentários
-    combined_df = pd.read_csv('comentarios_combinados.csv', encoding='utf-8')  # Substitua pelo caminho correto se necessário
+    combined_df = pd.read_csv('Comentários combinados - combined_comments (1).csv')  # Substitua pelo caminho correto se necessário
     # Filtrar dados pela opção selecionada
     filtered_df = combined_df[combined_df['subsidiária'] == option]
     # Exibir amostra dos dados carregados
@@ -168,10 +155,9 @@ with tab1:
         st.pyplot(plt)
     else:
         st.write("Não há comentários negativos para exibir a nuvem de palavras.")
-
 # Aba E-Cris
 with tab2:
-    st.markdown("<h2 style='color: #FFFFFF; font-size: 24px; font-weight: bold;'>E-Cris: Assistente Virtual</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #000000; font-size: 24px; font-weight: bold;'>E-Cris: Assistente Virtual</h2>", unsafe_allow_html=True)
     st.write("""
     Bem-vindo à E-Cris, sua assistente virtual para monitoramento e gerenciamento de crises. 
     Utilize esta seção para interagir com E-Cris e receber conselhos sobre melhores práticas de gerenciamento de crises.
