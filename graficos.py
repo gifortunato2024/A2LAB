@@ -32,10 +32,7 @@ def make_llm(model_name=GROQ_PRIMARY, temperature=0):
 Settings.llm = make_llm()
 
 modelo_embeddings = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2'
-Settings.embed_model = HuggingFaceEmbedding(
-    model_name=modelo_embeddings,
-    device="cpu"
-)
+Settings.embed_model = HuggingFaceEmbedding(model_name=modelo_embeddings)
 Settings.chunk_size = 2048
 Settings.chunk_overlap = 512
 
@@ -81,14 +78,14 @@ st.markdown("<h1 style='color: red;'>The Coca-Cola Company</h1>", unsafe_allow_h
 tab1, tab2 = st.tabs(["Monitoramento", "E-Cris"])
 # Aba de monitoramento
 with tab1:
-    st.markdown("<h2 style='color: white; font-size: 24px; font-weight: bold;'>Escolha uma das subsidiárias para monitorar:</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #FFFFFF; font-size: 24px; font-weight: bold;'>Escolha uma das subsidiárias para monitorar:</h2>", unsafe_allow_html=True)
     # Box para selecionar a subsidiária
     option = st.selectbox(
         "Qual subsidiária você quer monitorar?",
         ("Fanta", "Coca-Cola", "Del Valle", "Schweppes")
     )
     # Carregar dados de comentários
-    ccombined_df = pd.read_csv('comentarios_combinados.csv', encoding='utf-8')  # Substitua pelo caminho correto se necessário
+    combined_df = pd.read_csv('comentarios_combinados.csv', encoding='utf-8')  # Substitua pelo caminho correto se necessário
     # Filtrar dados pela opção selecionada
     filtered_df = combined_df[combined_df['subsidiária'] == option]
     # Exibir amostra dos dados carregados
@@ -160,7 +157,7 @@ with tab1:
         st.write("Não há comentários negativos para exibir a nuvem de palavras.")
 # Aba E-Cris
 with tab2:
-    st.markdown("<h2 style='color: white; font-size: 24px; font-weight: bold;'>E-Cris: Assistente Virtual</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #FFFFFF; font-size: 24px; font-weight: bold;'>E-Cris: Assistente Virtual</h2>", unsafe_allow_html=True)
     st.write("""
     Bem-vindo à E-Cris, sua assistente virtual para monitoramento e gerenciamento de crises. 
     Utilize esta seção para interagir com E-Cris e receber conselhos sobre melhores práticas de gerenciamento de crises.
